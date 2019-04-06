@@ -1,5 +1,7 @@
 {
   "name": "photogram",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

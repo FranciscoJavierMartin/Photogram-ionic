@@ -1,0 +1,33 @@
+<div class="post">
+  <ion-item lines="none">
+    <ion-avatar>
+      <img src="/assets/avatars/{{post.user.avatar}}" alt="Avatar not found">
+    </ion-avatar>
+    <ion-label>
+      <h3>{{post.user.name}}</h3>
+      <h5>{{post.user.email}}</h5>
+    </ion-label>
+  </ion-item>
+
+  <ion-slides pager="true">
+    <ion-slide class="image-slide" [style]="(img1) | domSanitizer ">
+    </ion-slide>
+    <ion-slide class="image-slide" [style]="(img1) | domSanitizer ">
+    </ion-slide>
+    <ion-slide class="image-slide" [style]="(img1) | domSanitizer ">
+    </ion-slide>
+  </ion-slides>
+
+  <!-- Map -->
+
+  <ion-item lines="none">
+    <ion-icon slot="start" name="heart-empty"></ion-icon>
+    <ion-icon slot="end" name="bookmark"></ion-icon>
+  </ion-item>
+
+  <ion-item lines="none">
+    <ion-label text-wrap>
+      {{post.message}}
+    </ion-label>
+  </ion-item>
+</div>
