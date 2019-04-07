@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ResponsePosts, Post } from '../interfaces/interfaces';
 import { UserService } from './user.service';
+import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer/ngx';
 
 const URL = environment.url;
 
@@ -16,7 +17,8 @@ export class PostsService {
   newPost = new EventEmitter<Post>();
 
   constructor(private http: HttpClient,
-              private userService: UserService ) { }
+              private userService: UserService,
+              private fileTransfer: FileTransfer ) { }
 
   getPosts(pull: boolean = false) {
     if ( pull ) {
@@ -38,5 +40,22 @@ export class PostsService {
           resolve(true);
         });
     });
+  }
+
+  uploadImage(img: string){
+    const options: FileUploadOptions = {
+      fileKey: 'image',
+      headers: {
+        'x-token': this.userService.token
+      }
+    };
+
+    const fileTransfetObject: FileTransferObject = this.fileTransfer.create();
+    fileTransfetObject.upload(img, `${URL}/posts/upload`, options)
+      .then(data => {
+
+      }).catch(err => {
+
+      });
   }
 }

@@ -38,6 +38,7 @@
   <ion-row>
     <ion-col size="6">
       <ion-button
+        (click)="takePhoto()"
         expand="full"
         shape="round">
         <ion-icon slot="start" name="camera"></ion-icon>
@@ -45,7 +46,8 @@
       </ion-button>
     </ion-col>
     <ion-col size="6">
-      <ion-button 
+      <ion-button
+        (click)="takeFromGallery()"
         expand="full"
         shape="round">
         <ion-icon slot="start" name="images"></ion-icon>
@@ -56,7 +58,7 @@
   <ion-row>
     <ion-col size="3" *ngFor="let image of tempImages">
       <ion-card>
-        <img src="">
+        <img [src]="image | imageSanitizer">
       </ion-card>
     </ion-col>
   </ion-row>

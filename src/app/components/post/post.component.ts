@@ -9,7 +9,11 @@ import { Post } from 'src/app/interfaces/interfaces';
 export class PostComponent implements OnInit {
 
   @Input() post: Post = {};
-  img1 = '/assets/perro-1.jpg';
+
+  slideSoloOpts = {
+    allowSlideNext: false,
+    allowSlidePrev: false
+  };
 
   constructor() { }
 
