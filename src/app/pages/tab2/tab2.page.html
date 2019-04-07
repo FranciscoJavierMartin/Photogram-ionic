@@ -4,7 +4,10 @@
       New post
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="createPost()" color="primary">
+      <ion-button 
+        [disabled]="post.message.length < 1 || loadingGeolocation"
+        (click)="createPost()" 
+        color="primary">
         Share
       </ion-button>
     </ion-buttons>
@@ -15,19 +18,27 @@
   <ion-list>
     <ion-item>
       <ion-label position="floating">Message</ion-label>
-      <ion-textarea></ion-textarea>
+      <ion-textarea [(ngModel)]="post.message"></ion-textarea>
     </ion-item>
     <ion-list>
       <ion-item>
         <ion-label>Current position</ion-label>
-        <ion-spinner name="lines-small"></ion-spinner>
-        <ion-toggle slot="end"></ion-toggle>
+        <ion-spinner
+          *ngIf="loadingGeolocation"
+          name="lines-small">
+        </ion-spinner>
+        <ion-toggle
+          [(ngModel)]="post.position"
+          (ionChange)="getGeolocation()"
+          slot="end">
+        </ion-toggle>
       </ion-item>
     </ion-list>
   </ion-list>
   <ion-row>
     <ion-col size="6">
       <ion-button
+        (click)="takePhoto()"
         expand="full"
         shape="round">
         <ion-icon slot="start" name="camera"></ion-icon>
@@ -35,7 +46,8 @@
       </ion-button>
     </ion-col>
     <ion-col size="6">
-      <ion-button 
+      <ion-button
+        (click)="takeFromGallery()"
         expand="full"
         shape="round">
         <ion-icon slot="start" name="images"></ion-icon>
@@ -46,7 +58,7 @@
   <ion-row>
     <ion-col size="3" *ngFor="let image of tempImages">
       <ion-card>
-        <img src="">
+        <img [src]="image | imageSanitizer">
       </ion-card>
     </ion-col>
   </ion-row>

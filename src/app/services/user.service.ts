@@ -23,9 +23,9 @@ export class UserService {
     const data = { email, password };
 
     return new Promise(resolve => {
-      this.http.post(`${URL}/user/login`, data).subscribe(resp => {
+      this.http.post(`${URL}/user/login`, data).subscribe(async resp => {
         if (resp['ok']) {
-          this.saveToken(resp['token']);
+          await this.saveToken(resp['token']);
           resolve(true);
         } else {
           this.token = null;
@@ -36,11 +36,18 @@ export class UserService {
     });
   }
 
+  logout() {
+    this.token = null;
+    this.user = null;
+    this.storage.clear();
+    this.navCtrl.navigateRoot('/login', {animated: true});
+  }
+
   register(user: User) {
     return new Promise(resolve => {
-      this.http.post(`${URL}/user/create`, user).subscribe(resp => {
+      this.http.post(`${URL}/user/create`, user).subscribe(async resp => {
         if (resp['ok']) {
-          this.saveToken(resp['token']);
+          await this.saveToken(resp['token']);
           resolve(true);
         } else {
           this.token = null;
@@ -54,6 +61,7 @@ export class UserService {
   async saveToken(token: string) {
     this.token = token;
     await this.storage.set('token', token);
+    await this.validToken();
   }
 
   async loadToken() {
@@ -112,4 +120,5 @@ export class UserService {
     });
 
   }
+  
 }
