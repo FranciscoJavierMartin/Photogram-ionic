@@ -58,4 +58,8 @@ export class PostsService {
 
       });
   }
+
+  resetPaginate(){
+    this.pagePost = 0;
+  }
 }
